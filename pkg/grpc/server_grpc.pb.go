@@ -4,7 +4,7 @@
 // - protoc             v3.21.12
 // source: server.proto
 
-package server
+package grpc
 
 import (
 	context "context"
@@ -19,8 +19,8 @@ import (
 const _ = grpc.SupportPackageIsVersion9
 
 const (
-	QueueService_RecieveMessages_FullMethodName = "/server.QueueService/RecieveMessages"
-	QueueService_SendMessages_FullMethodName    = "/server.QueueService/SendMessages"
+	QueueService_RecieveMessages_FullMethodName = "/grpc.QueueService/RecieveMessages"
+	QueueService_SendMessages_FullMethodName    = "/grpc.QueueService/SendMessages"
 )
 
 // QueueServiceClient is the client API for QueueService service.
@@ -144,7 +144,7 @@ func _QueueService_SendMessages_Handler(srv interface{}, ctx context.Context, de
 // It's only intended for direct use with grpc.RegisterService,
 // and not to be introspected or modified (even as a copy)
 var QueueService_ServiceDesc = grpc.ServiceDesc{
-	ServiceName: "server.QueueService",
+	ServiceName: "grpc.QueueService",
 	HandlerType: (*QueueServiceServer)(nil),
 	Methods: []grpc.MethodDesc{
 		{
