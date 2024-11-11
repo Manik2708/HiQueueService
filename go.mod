@@ -15,3 +15,7 @@ require (
 	golang.org/x/text v0.20.0 // indirect
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20241104194629-dd2ea8efbc28 // indirect
 )
+
+replace(
+	github.com/Manik2708/HiQueueService/pkg => ./pkg
+)
