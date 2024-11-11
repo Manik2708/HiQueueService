@@ -1,4 +1,4 @@
-module hiQueueService
+module github.com/Manik2708/HiQueueService
 
 go 1.23.0
 
