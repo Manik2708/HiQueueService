@@ -1,0 +1,27 @@
+syntax = "proto3";
+
+option go_package = "github.com/Manik2708/package/server";
+
+package server;
+
+service QueueService{
+    rpc RecieveMessages(RecieveMessageRequest) returns (stream RecieveMessageResponse){}
+    rpc SendMessages(SendMessageRequest) returns (SendMesssageResponse){}
+}
+
+message RecieveMessageRequest{
+    string id = 1;
+}
+
+message RecieveMessageResponse{
+    string content = 1;
+}
+
+message SendMessageRequest{
+    string id = 1;
+    string content = 2;
+}
+
+message SendMesssageResponse{
+    bool success = 1; 
+}
