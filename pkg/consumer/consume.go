@@ -2,6 +2,7 @@ package consumer
 
 import (
 	"context"
+	"fmt"
 	"time"
 
 	amqp "github.com/rabbitmq/amqp091-go"
@@ -47,16 +48,21 @@ func NewSendingRequest(id string, msg string, chnl chan ChannelResponse[bool]) *
 }
 
 type HiConsumer struct {
-	conn     *amqp.Connection
+	Conn     *amqp.Connection
 	RecChan  chan RecievingRequest
 	SendChan chan SendingRequest
 }
 
 func (c *HiConsumer) StartConsuming() error {
-	chnl, err := c.conn.Channel()
+	defer close(c.RecChan)
+	defer close(c.SendChan)
+	fmt.Println("Started consuming")
+	chnl, err := c.Conn.Channel()
 	if err != nil {
 		return err
 	}
+	defer chnl.Close()
+	fmt.Println("Channel Created")
 	for {
 		select {
 		case rq := <-c.RecChan:

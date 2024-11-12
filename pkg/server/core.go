@@ -3,6 +3,7 @@ package server
 import (
 	"context"
 	"errors"
+	"fmt"
 	"net"
 
 	cn "github.com/Manik2708/HiQueueService/pkg/consumer"
@@ -28,6 +29,7 @@ func (c *CoreServer) RecieveMessages(rq *pb.RecieveMessageRequest, s grpc.Server
 		strRsp.Content = *rsp.Msg
 		s.Send(strRsp)
 	}
+	s.Context().Done()
 	return nil
 }
 
@@ -47,13 +49,16 @@ func (c *CoreServer) SendMessages(ctx context.Context, rq *pb.SendMessageRequest
 	return nil, errors.New("operation unsuccesful due to unknown error")
 }
 
-func (c *CoreServer) New() error {
+func (c *CoreServer) New(port string, cns *cn.HiConsumer) error {
+	c.port = port
+	c.cns = cns
 	lis, err := net.Listen("tcp", ":"+c.port)
 	if err != nil {
 		return err
 	}
 	s := grpc.NewServer()
 	pb.RegisterQueueServiceServer(s, &CoreServer{})
+	fmt.Println("gRPC Server created")
 	err = s.Serve(lis)
 	if err != nil {
 		return err
